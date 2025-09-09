@@ -1,0 +1,94 @@
+# acheCourtroom - BackEnd
+
+## Pré-requisitos
+
+- Node.js (versão compatível com ES Modules)
+- npm
+- Um servidor MongoDB acessível (local ou remoto)
+
+## Preparar após clonar
+
+1. Instale dependências:
+
+```powershell
+cd <diretório-do-repo>
+npm install
+```
+
+2. Crie um arquivo `.env` na raiz do projeto com as variáveis necessárias (exemplo):
+
+```
+zap
+```
+
+Observações:
+- `PORT`: porta onde o servidor irá escutar.
+- `MONGODB_URI`: string de conexão do MongoDB.
+- `API_URL`: (opcional) usado no código comentado para ping/keep-alive.
+
+3. Inicie o servidor:
+
+```powershell
+node server.js
+```
+
+> Observação: o `package.json` atual declara `"type": "module"`, então o Node deve ser executado em um ambiente que suporte ES Modules.
+
+## Arquivos principais
+
+- `server.js` - ponto de entrada da aplicação. Faz conexão com o MongoDB, importa as rotas e inicia o servidor.
+- `routes/analise.js` - define as rotas relacionadas à análise (POST `/add`, GET `/all`).
+- `models/productModel.js` - schema Mongoose usado para persistir os documentos.
+
+## Rotas disponíveis (URLs locais)
+
+Base URL (local): http://localhost:<PORT>/analise
+
+1) Adicionar nova análise
+- Método: POST
+- URL local: http://localhost:<PORT>/analise/add
+- Descrição: cria e salva um novo registro usando o modelo `Product`.
+
+2) Listar todas as análises
+- Método: GET
+- URL local: http://localhost:<PORT>/analise/all
+- Descrição: retorna um array com todos os documentos armazenados.
+
+## Modelo JSON esperado no POST `/analise/add`
+
+O endpoint espera um corpo JSON com os campos abaixo (exemplo):
+
+```json
+{
+	"id": 123,
+	"data": "2025-09-09T12:00:00.000Z",
+	"aprovacao": true,
+	"status": "concluido",
+	"veracidade": "alta",
+	"imgLabel": "https://exemplo.com/label.png",
+	"imgNormal": "https://exemplo.com/normal.png"
+}
+```
+
+Campos (modelo `models/productModel.js`):
+
+- `id` (Number) — obrigatório, único.
+- `data` (Date) — data da análise (ISO string aceita).
+- `aprovacao` (Boolean) — sinaliza aprovação.
+- `status` (String) — status livre (ex.: "pendente", "concluido").
+- `veracidade` (String) — nível/descrição da veracidade.
+- `imgLabel` (String) — URL ou base64 da imagem rotulada.
+- `imgNormal` (String) — URL ou base64 da imagem normal.
+
+Resposta de sucesso (POST):
+
+```json
+{
+	"message": "Product added successfully",
+	"product": { /* objeto salvo */ }
+}
+```
+
+Resposta de erro comum: status `500` com objeto JSON descrevendo o erro.
+
+
