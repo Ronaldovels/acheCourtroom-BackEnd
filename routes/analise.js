@@ -36,4 +36,38 @@ router.get('/all', async (req, res) => {
     }
 })
 
+router.patch('/update/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { aprovacao, status, veracidade } = req.body;
+        const updatedProduct = await Product.findOneAndUpdate(
+            { id: id },
+            { aprovacao, status, veracidade },
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Produto não encontrado.' });
+        }
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        console.error("Erro ao atualizar produto: ", error.message);
+        res.status(500).json({message: 'Erro interno ao atualizar produto.'})
+    }
+})
+
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const deletedProduct = await Product.findOneAndDelete({ id: id });
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Produto não encontrado.' });
+        }
+        res.status(200).json({ message: 'Produto deletado com sucesso.' });
+    } catch (error) {
+        console.error("Erro ao deletar produto: ", error.message);
+        res.status(500).json({message: 'Erro interno ao deletar produto.'})
+    }
+})
+
 export default router;

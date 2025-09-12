@@ -29,11 +29,10 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-/*const keepAlive = () => {
+const keepAlive = () => {
     axios.get(API)
         .then(() => console.log('Pinged API to keep alive'))
         .catch((err) => console.error('Error pinging API:', err));
 }
         
 setInterval(keepAlive, 5 * 60 * 1000); // Ping every 5 minutes
-*/
