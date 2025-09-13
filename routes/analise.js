@@ -6,11 +6,12 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
     try {
-        const { id, data, aprovacao, status, veracidade, imgLabel, imgNormal } = req.body;
+        const { id, data, tipo, aprovacao, status, veracidade, imgLabel, imgNormal } = req.body;
         
         const newProduct = new Product({
             id,
             data,
+            tipo,
             aprovacao,
             status,
             veracidade,
@@ -42,7 +43,7 @@ router.patch('/update/:id', async (req, res) => {
         const { aprovacao, status, veracidade } = req.body;
         const updatedProduct = await Product.findOneAndUpdate(
             { id: id },
-            { aprovacao, status, veracidade },
+            { aprovacao, status, veracidade, tipo},
             { new: true }
         );
 

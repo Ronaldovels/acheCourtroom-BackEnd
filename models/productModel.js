@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
         unique: true
     },
     data: Date,
+    tipo: String,
     aprovacao: Boolean,
     status: String,
     veracidade: String,
