@@ -40,7 +40,7 @@ router.get('/all', async (req, res) => {
 router.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { aprovacao, status, veracidade } = req.body;
+        const { aprovacao, status, veracidade, tipo} = req.body;
         const updatedProduct = await Product.findOneAndUpdate(
             { id: id },
             { aprovacao, status, veracidade, tipo},
