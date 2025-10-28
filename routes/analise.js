@@ -6,21 +6,33 @@ const router = express.Router();
 
 router.post('/add', async (req, res) => {
     try {
-        const { id, data, tipo, aprovacao, status, veracidade, imgLabel, imgNormal } = req.body;
-        
-        const newProduct = new Product({
-            id,
-            data,
-            tipo,
-            aprovacao,
-            status,
-            veracidade,
-            imgLabel,
-            imgNormal
-        })
+        // Verifica se o body é um array
+        if (Array.isArray(req.body)) {
+            // Insere múltiplos produtos
+            const newProducts = await Product.insertMany(req.body);
+            return res.status(201).json({ 
+                message: 'Products added successfully', 
+                count: newProducts.length,
+                products: newProducts 
+            });
+        } else {
+            // Insere um único produto
+            const { id, data, tipo, aprovacao, status, veracidade, imgLabel, imgNormal } = req.body;
+            
+            const newProduct = new Product({
+                id,
+                data,
+                tipo,
+                aprovacao,
+                status,
+                veracidade,
+                imgLabel,
+                imgNormal
+            })
 
-        await newProduct.save();
-        res.status(201).json({ message: 'Product added successfully', product: newProduct });
+            await newProduct.save();
+            return res.status(201).json({ message: 'Product added successfully', product: newProduct });
+        }
 
     } catch (error) {
         console.error("Erro ao criar novo produto: ", error.message);
