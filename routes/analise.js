@@ -43,7 +43,12 @@ router.post('/add', async (req, res) => {
 
 router.get('/all', async (req, res) => {
     try {
-        const products = await Product.find();
+        const { contagem } = req.query;
+        
+        // Se o parâmetro contagem estiver presente, filtra por ele
+        const filter = contagem ? { contagem } : {};
+        
+        const products = await Product.find(filter);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({error: 'Erro ao buscar produtos'});
