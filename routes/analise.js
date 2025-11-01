@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
             });
         } else {
             // Insere um único produto
-            const { id, data, tipo, aprovacao, status, veracidade, contagem, imgLabel, imgNormal } = req.body;
+            const { id, data, tipo, aprovacao, status, veracidade, contagem, contem, faltando, imgLabel, imgNormal } = req.body;
             
             const newProduct = new Product({
                 id,
@@ -27,6 +27,8 @@ router.post('/add', async (req, res) => {
                 status,
                 veracidade,
                 contagem,
+                contem,
+                faltando,
                 imgLabel,
                 imgNormal
             })
