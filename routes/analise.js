@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
             });
         } else {
             // Insere um único produto
-            const { id, data, tipo, aprovacao, status, veracidade, imgLabel, imgNormal } = req.body;
+            const { id, data, tipo, aprovacao, status, veracidade, contagem, imgLabel, imgNormal } = req.body;
             
             const newProduct = new Product({
                 id,
@@ -26,6 +26,7 @@ router.post('/add', async (req, res) => {
                 aprovacao,
                 status,
                 veracidade,
+                contagem,
                 imgLabel,
                 imgNormal
             })
@@ -52,10 +53,10 @@ router.get('/all', async (req, res) => {
 router.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { aprovacao, status, veracidade, tipo} = req.body;
+        const { aprovacao, status, veracidade, tipo, contagem} = req.body;
         const updatedProduct = await Product.findOneAndUpdate(
             { id: id },
-            { aprovacao, status, veracidade, tipo},
+            { aprovacao, status, veracidade, tipo, contagem},
             { new: true }
         );
 

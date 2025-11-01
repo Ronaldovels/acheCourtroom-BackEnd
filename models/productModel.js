@@ -16,15 +16,12 @@ const productSchema = new mongoose.Schema({
     contagem: {
         type: String,
         enum: ['pendente', 'concluida'],
-        required: false
     },
     faltando: {
         type: Number,
-        required: false
     },
     contem: {
         type: Number,
-        required: false
     }
 })
     
