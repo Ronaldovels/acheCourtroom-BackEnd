@@ -12,7 +12,20 @@ const productSchema = new mongoose.Schema({
     status: String,
     veracidade: String,
     imgLabel: String,
-    imgNormal: String
+    imgNormal: String,
+    contagem: {
+        type: String,
+        enum: ['pendente', 'concluida'],
+        required: false
+    },
+    faltando: {
+        type: Number,
+        required: false
+    },
+    contem: {
+        type: Number,
+        required: false
+    }
 })
     
 const product = mongoose.model('Product', productSchema);
